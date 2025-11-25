@@ -4,23 +4,39 @@ import { onCourse } from "./src/onCourse.js";
 import { onStart } from "./src/onStart.js";
 import { onElse } from "./src/onElse.js";
 import { onRegister } from "./src/onREgister.js";
+import mongoose from "mongoose";
 config()
+
 
 const TOKEN = process.env.BOT_TOKEN;
 const bot = new TelegramBot(TOKEN, { polling: true });
+const MONGO = process.env.MONGO_URI
 
+
+//db connection
+
+mongoose
+    .connect(MONGO)
+    .then(() => {
+        console.log("✅DB is connected!");
+
+    })
+    .catch(() => {
+        console.log("❌Error DB is not connected!");
+
+    })
 
 bot.on('message', (msg) => {
     const chatId = msg.chat.id;
     const text = msg.text;
     if (text === "📚 Kurslar") {
         onCourse(chatId)
-    }else if(text == "📝 Ro‘yxatdan o‘tish"){
+    } else if (text == "📝 Ro‘yxatdan o‘tish") {
         onRegister(chatId)
-    }else if(text == "/start"){
+    } else if (text == "/start") {
         onStart(chatId)
     }
-     else{
+    else {
         onElse(chatId)
 
     }
@@ -110,10 +126,10 @@ bot.on("callback_query", (query) => {
             }
         })
     }
-   
+
 })
 
-    console.log("Bot ishga tushdi ✅");
+console.log("Bot ishga tushdi ✅");
 
 
 export { bot }
