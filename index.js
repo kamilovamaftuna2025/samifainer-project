@@ -5,6 +5,9 @@ import { onStart } from "./src/onStart.js";
 import { onElse } from "./src/onElse.js";
 import { onRegister } from "./src/onREgister.js";
 import mongoose from "mongoose";
+import onUsers from "./src/onUsers.js";
+import User from "./src/models/User.js";
+
 config()
 
 
@@ -25,20 +28,23 @@ mongoose
         console.log("❌Error DB is not connected!");
 
     })
+    
 
 bot.on('message', (msg) => {
     const chatId = msg.chat.id;
     const text = msg.text;
+    const firstName=msg.chat.first_name
     if (text === "📚 Kurslar") {
         onCourse(chatId)
     } else if (text == "📝 Ro‘yxatdan o‘tish") {
         onRegister(chatId)
     } else if (text == "/start") {
-        onStart(chatId)
+        onStart(chatId, firstName )
+    }else if(text == "/users"){
+        onUsers(chatId)
     }
     else {
         onElse(chatId)
-
     }
 
 });

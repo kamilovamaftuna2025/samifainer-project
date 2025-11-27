@@ -1,8 +1,30 @@
 import { bot } from "../index.js";
+import User from "./models/User.js";
 
-function onStart(chatId,name){
+
+async function onStart(chatId, firstName) {
     console.log("start...");
-    bot.sendMessage(chatId,`👋 Assalomu alaykum, ${name}!
+
+    const userExists = await User.findOne({ telegramId: chatId })
+    console.log(userExists);
+    if (!userExists) {
+        // malumotlar bazasida yangi foydalanuvchi yaratish
+        const newUser = new User({
+            telegramId: chatId,
+            firstname: firstName,
+        })
+
+        newUser.save()
+    }
+
+
+
+
+    bot.sendMessage(
+
+        chatId,
+
+        `👋 Assalomu alaykum, ${name}!
 🎓 100x Academy o‘quv markazining rasmiy botiga xush kelibsiz!
 
 Bu bot orqali siz:
@@ -23,4 +45,4 @@ Bu bot orqali siz:
 
 
 }
-export{ onStart }
+export { onStart }
