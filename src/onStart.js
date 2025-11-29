@@ -24,7 +24,7 @@ async function onStart(chatId, firstName) {
 
         chatId,
 
-        `👋 Assalomu alaykum, ${name}!
+        `👋 Assalomu alaykum, ${firstName}!
 🎓 100x Academy o‘quv markazining rasmiy botiga xush kelibsiz!
 
 Bu bot orqali siz:
